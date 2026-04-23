@@ -1,5 +1,4 @@
-# 🚀 Framework Híbrido de Codificación Semántica (Tesis RAG/ML)
-
+# 🚀 Framework Híbrido de Codificación Semántica
 Este repositorio contiene el núcleo (Kernel) de un sistema de clasificación semántica híbrida. Diseñado bajo los principios de **Arquitectura Hexagonal (Puertos y Adaptadores)** y **Patrones de Diseño de Alta Cohesión**, el sistema permite la ejecución en cascada de múltiples motores de Inteligencia Artificial (Modelos Tradicionales + Agentes LLM) con un ruteo de decisión dinámico.
 
 ## 📌 Descripción General
@@ -15,7 +14,7 @@ El objetivo P0 de este framework es clasificar propiedades semánticas (texto cr
 
 El sistema es estrictamente agnóstico. El Orquestador no conoce la existencia de HuggingFace, OpenAI, LangChain ni matemáticas de cálculo de distancia. Todo se comunica a través de **Puertos (Interfaces)**.
 
-![Arquitectura Hexagonal](./ArquitecturaFrameworkTesis.drawio.jpg)
+![Arquitectura Hexagonal](./diagramas/ArquitecturaFramework.png)
 *(Nota: Asegúrate de que el archivo `ArquitecturaFrameworkTesis.drawio.jpg` esté en la misma ruta que este README)*
 
 ### ⚙️ Componentes Principales
