@@ -15,7 +15,6 @@ El objetivo P0 de este framework es clasificar propiedades semánticas (texto cr
 El sistema es estrictamente agnóstico. El Orquestador no conoce la existencia de HuggingFace, OpenAI, LangChain ni matemáticas de cálculo de distancia. Todo se comunica a través de **Puertos (Interfaces)**.
 
 ![Arquitectura Hexagonal](./diagramas/ArquitecturaFramework.png)
-*(Nota: Asegúrate de que el archivo `ArquitecturaFrameworkTesis.drawio.jpg` esté en la misma ruta que este README)*
 
 ### ⚙️ Componentes Principales
 
