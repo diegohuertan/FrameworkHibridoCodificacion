@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Optional, Dict
 
 @dataclass(frozen=True)
 class PropiedadListada:
@@ -17,6 +17,6 @@ class EtiquetaSemantica:
     Representa la salida estandarizada del sistema.
     """
     codigo: str
-    confianza: float
-    origen: str  # Ej: 'AC-PLT_kNN', 'MAD_GPT4', 'MAD_Claude3'
-    razonamiento: Optional[str] = None  # Justificación del LLM si es necesario
+    metricas: Dict[str, float] = field(default_factory=dict)
+    origen: str
+    razonamiento: Optional[str] = None
