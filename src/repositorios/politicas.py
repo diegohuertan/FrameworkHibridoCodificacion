@@ -1,7 +1,7 @@
 import logging
 from typing import Dict
 from src.core import EtiquetaSemantica
-from src.puertos import IPoliticaAceptacion
+from src.puertos.interfaces import IPoliticaAceptacion
 
 class PoliticaACPLT(IPoliticaAceptacion):
     """Especialista kNN: Aprueba si la distancia Euclidiana/Coseno es MENOR al umbral."""

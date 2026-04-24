@@ -17,6 +17,6 @@ class EtiquetaSemantica:
     Representa la salida estandarizada del sistema.
     """
     codigo: str
-    metricas: Dict[str, float] = field(default_factory=dict)
     origen: str
+    metricas: Dict[str, float] = field(default_factory=dict)
     razonamiento: Optional[str] = None
