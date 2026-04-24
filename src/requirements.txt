@@ -8,3 +8,7 @@ plotnine
 patchworklib
 transformers
 sentence_transformers
+joblib
+torch
+nltk
+python3 -m spacy download es_core_news_sm
