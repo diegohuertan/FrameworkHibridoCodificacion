@@ -1,7 +1,7 @@
 import logging
 from typing import List
 from src.core import PropiedadListada, EtiquetaSemantica
-from src.puertos import IProcesarLoteService, IClasificadorRepository, IPoliticaAceptacion
+from src.puertos.interfaces import IProcesarLoteService, IClasificadorRepository, IPoliticaAceptacion
 
 # Logs para el orquestador
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
