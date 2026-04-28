@@ -2,55 +2,84 @@ import logging
 import os
 import sys
 
-# Ajustar el path para que el kernel encuentre la raíz 'src'
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# 1. Alineación de Path (Soberanía de directorios)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
-# Imports de Élite: Limpios, directos y soberanos
-from src.core import PropiedadListada
-from src.repositorios.ac_plt.repository import ACPLTRepository
-from src.repositorios import PoliticaACPLT, PoliticaMaestra
-from src.servicios.orquestador import OrquestadorClasificacionService
+# Imports de Dominio
+from src.core.models import PropiedadListada
+# Importamos el nuevo Repositorio (ajusta el path si es necesario)
+from src.repositorios.multi_agent_debate.repository import MADRepository
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def run_staging_test():
-    logging.info("=== KERNEL BOOT SEQUENCE: MODE STAGING ===")
+def run_production_test():
+    logging.info("=== KERNEL BOOT SEQUENCE: MODE REPOSITORY-MAD ===")
     
-    # 1. Motor Primario (Carga el .pkl unificado)
-    motor_primario = ACPLTRepository()
-    
-    # 2. El Juez (Política de confianza)
-    mapa_leyes = {
-        "AC-PLT": PoliticaACPLT(umbral_distancia=0.05) 
-    }
-    juez_supremo = PoliticaMaestra(mapa_leyes)
-    
-    # 3. Orquestador (El cerebro del Framework)
-    orquestador = OrquestadorClasificacionService(
-        motores=[motor_primario], 
-        politica=juez_supremo
+    # 1. Instanciar el Repositorio MAD (Aquí la Factory hace su magia internamente)
+    try:
+        repo_mad = MADRepository()
+    except Exception:
+        logging.error("Falla crítica en el despliegue del repositorio.")
+        return
+
+    # 2. Carga de Payload (Simulando lo que vendría del CPN)
+
+    lote_prueba = [
+    # 1. Abstracto de alta ambigüedad (Gold Standard: PERDÓN)
+    PropiedadListada(
+        concepto="Compasión", 
+        texto_crudo="por lo que se le perdona la vida a alguien en las peliculas"
+    ),
+    # 2. Abstracto descriptivo (Gold Standard: FIJACIÓN)
+    PropiedadListada(
+        concepto="Obsesión", 
+        texto_crudo="fijación mantenida en el tiempo con un objeto o persona"
+    ),
+    # 3. Asociación de Acción (Gold Standard: PROTECCIÓN)
+    PropiedadListada(
+        concepto="Cáscara", 
+        texto_crudo="proteger"
+    ),
+    # 4. Mapeo Organizacional (Gold Standard: EMPRESA)
+    PropiedadListada(
+        concepto="Entidad", 
+        texto_crudo="asociación de personas que se dedican a hacer algo"
+    ),
+    # 5. Atributo directo (Gold Standard: LENTITUD)
+    PropiedadListada(
+        concepto="Caracol", 
+        texto_crudo="lento"
     )
-    
-    # 4. Payload de prueba
-    lote = [
-        PropiedadListada(concepto="granito", texto_crudo="seco"),
-        PropiedadListada(concepto="cáscara", texto_crudo="proteger"), 
-    ]
-    
+]
 
-
-    # 5. Ejecución del Pipeline
-    logging.info("Inyectando datos en el Pipeline Hexagonal...")
-    resultados = orquestador.ejecutar(lote)
+    # 3. Ejecución a través de la Interfaz (Clasificar Lote)
+    logging.info(f"Inyectando lote de {len(lote_prueba)} propiedades al motor MAD...")
     
-    # 6. Reporte de Telemetría
-    print("\n" + "="*40)
-    print("      RESULTADOS DE CLASIFICACIÓN")
-    print("="*40)
-    for i, etiqueta in enumerate(resultados):
-        dist = etiqueta.metricas.get("distancia_knn", 0.0)
-        print(f"[{i+1}] {etiqueta.codigo:<15} | Dist: {dist:.4f} | Origen: {etiqueta.origen}")
-    print("="*40)
+    try:
+        etiquetas = repo_mad.clasificar_lote(lote_prueba)
+        
+        # 4. Reporte de Telemetría Final
+        print("\n" + "═"*60)
+        print("      RESULTADOS FINALES DEL REPOSITORIO MAD")
+        print("═"*60)
+        
+        for i, etiqueta in enumerate(etiquetas):
+            print(f"Propiedad [{i+1}]: {lote_prueba[i].texto_crudo}")
+            print(f"Código CPN: {etiqueta.codigo}")
+            print(f"Origen:     {etiqueta.origen}")
+            print(f"Métricas:   {etiqueta.metricas}")
+            print("-" * 40)
+            # Descomentar si quieres ver todo el "choclo" de la pelea
+            # print(f"Razonamiento:\n{etiqueta.razonamiento}\n")
+        
+        print("═"*60)
+
+    except Exception as e:
+        logging.error(f"Error durante la clasificación por lote: {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
-    run_staging_test()
+    run_production_test()

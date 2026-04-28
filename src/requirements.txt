@@ -12,3 +12,4 @@ joblib
 torch
 nltk
 python3 -m spacy download es_core_news_sm
+pip install groq openai google-generativeai python-dotenv sentence-transformers scikit-learn
